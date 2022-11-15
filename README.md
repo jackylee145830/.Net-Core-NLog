@@ -1,5 +1,8 @@
 # 使用NLog紀錄程式日誌
 
+開發環境
+.NET 5
+
 1 編輯Convience.ManagentApi.csprog，在ItemGroup段落加入NLog主要的套件
 ```
 <ItemGroup>
