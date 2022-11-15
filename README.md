@@ -44,3 +44,92 @@
   </rules>
 </nlog>
 ```
+
+
+3 編輯Program.cs
+```
+public class Program
+    {
+        public static void Main(string[] args)
+        {
+
+            var logger = NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
+            try
+            {
+                logger.Debug("Debug init main");
+                logger.Info("Info init main");
+                var host = CreateHostBuilder(args).Build();
+                host.InitialDataBase<SystemIdentityDbContext>(DbContextSeed.InitialApplicationDataBase);
+                host.Run();
+            }
+            catch (Exception ex)
+            {
+                // 眸袙雄祑都
+                logger.Error(ex, "Program stopped because of exception");
+                //throw;
+            }
+            finally
+            {
+                NLog.LogManager.Shutdown();
+            }
+        }
+
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                })
+                .ConfigureLogging(logging =>
+                {
+                    logging.ClearProviders();
+                    logging.SetMinimumLevel(LogLevel.Trace);
+                    logging.AddConsole();
+                }).UseNLog();
+            
+
+    }
+```
+
+4 調整專案設定檔appsettings.json
+```
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Trace",
+      "Microsoft": "Warning",
+      "Microsoft.Hosting.Lifetime": "Information"
+    }
+  },
+  "AllowedHosts": "*"
+}
+```
+
+5 宣告NLog
+```
+using Microsoft.Extensions.Logging;
+namespace CookbookApi.Controllers
+{
+    [Route("api/[controller]")]
+    public class TestController : Controller
+    {
+        private readonly ILogger<RecipeController> _logger;
+ 
+        public TestController(ILogger<RecipeController> logger)
+        {
+            _logger = logger;
+        }
+        public void Test(){
+            //Log的等級
+            _logger.LogCritical("");
+            _logger.LogDebug("");
+            _logger.LogError("");
+            _logger.LogInformation("");
+            _logger.LogTrace("");
+            _logger.LogWarning("");
+        }
+}
+```
+
+
+    
