@@ -1,15 +1,13 @@
 # 使用NLog紀錄程式日誌
 
 #### 開發環境
-
-Microsoft Visual Studio Professional 2019
-
-.NET 5
+* Microsoft Visual Studio Professional 2019
+* .NET 5
 ***
 
 #### 內容
 
-1 編輯Convience.ManagentApi.csprog，在ItemGroup段落加入NLog主要的套件
+1. 編輯Convience.ManagentApi.csprog，在ItemGroup段落加入NLog主要的套件
 ```
 <ItemGroup>
     <PackageReference Include="NLog" Version="4.7.9" />
@@ -17,7 +15,7 @@ Microsoft Visual Studio Professional 2019
 </ItemGroup>
 ```
 
-2 在根目錄建立nlog.config，此為NLog的設定檔。
+2. 在根目錄建立nlog.config，此為NLog的設定檔。
 ```
 <?xml version="1.0" encoding="utf-8" ?>
 <nlog xmlns="http://www.nlog-project.org/schemas/NLog.xsd"
@@ -55,7 +53,7 @@ Microsoft Visual Studio Professional 2019
 ```
 
 
-3 編輯Program.cs
+3. 編輯Program.cs
 ```
 public class Program
     {
@@ -100,7 +98,7 @@ public class Program
     }
 ```
 
-4 調整專案設定檔appsettings.json
+4. 調整專案設定檔appsettings.json
 ```
 {
   "Logging": {
@@ -114,7 +112,7 @@ public class Program
 }
 ```
 
-5 宣告NLog
+5. 宣告NLog
 ```
 using Microsoft.Extensions.Logging;
 namespace CookbookApi.Controllers
